@@ -1,6 +1,7 @@
 const books = [
   {
     etag: 'abc123',
+    id: 'abc123',
     volumeInfo: {
       description: 'Not a real book',
       imageLinks: {
@@ -10,6 +11,7 @@ const books = [
   },
   {
     etag: 'bbbb9',
+    id: 'bbbb9',
     volumeInfo: {
       description: 'Also not a real book',
       imageLinks: {
