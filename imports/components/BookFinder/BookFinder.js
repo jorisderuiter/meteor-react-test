@@ -29,6 +29,9 @@ const styles = {
   searchButton: {
     marginLeft: 6,
   },
+  saveBooksResponse: {
+    marginTop: 16,
+  }
 };
 
 @injectSheet(styles)
@@ -42,6 +45,7 @@ class BookFinder extends Component {
       books: [],
       fetching: false,
       query: '',
+      saveBooksResponse: false,
     };
   }
 
@@ -55,13 +59,21 @@ class BookFinder extends Component {
         book => this.props.selectedBookIds.indexOf(book.id) >= 0,
       ),
     }, (err) => {
-      if (!err) {
+      if (err) {
+        this.setState({ saveBooksResponse: err.message });
+      } else {
+        this.setState({ saveBooksResponse: 'Saved successfully' });
         this.props.selectedBookIds.forEach(bookId => {
           this.props.onToggleBookSelection(bookId);
         })
       }
     });
   };
+
+  toggleBookSelection = (bookId) => {
+    this.setState({ saveBooksResponse: false });
+    this.props.onToggleBookSelection(bookId);
+  }
 
   searchBooks = async event => {
     event.preventDefault();
@@ -107,6 +119,18 @@ class BookFinder extends Component {
     )
   }
 
+  renderSaveBooksResponse = () => {
+    if (!this.state.saveBooksResponse) return null;
+
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.saveBooksResponse}>
+        {this.state.saveBooksResponse}
+      </div>
+    )
+  }
+
   renderResultsArea = () => {
     if (!this.state.bookCount) return null;
 
@@ -118,11 +142,12 @@ class BookFinder extends Component {
           {this.state.bookCount} books found. Showing 40.
         </div>
         {this.renderSaveBooksAction()}
+        {this.renderSaveBooksResponse()}
         <div className={classes.bookResults}>
           <Bookshelf
             books={this.state.books}
             selectedBookIds={this.props.selectedBookIds}
-            onToggleBookSelection={this.props.onToggleBookSelection}
+            onToggleBookSelection={this.toggleBookSelection}
           />
         </div>
       </div>
