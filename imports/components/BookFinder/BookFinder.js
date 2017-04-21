@@ -52,7 +52,7 @@ class BookFinder extends Component {
   saveBooks = () => {
     this.props.saveBooks.call({
       books: this.state.books.filter(
-        book => this.props.selectedBookIds.indexOf(book.etag) >= 0,
+        book => this.props.selectedBookIds.indexOf(book.id) >= 0,
       ),
     });
   };
