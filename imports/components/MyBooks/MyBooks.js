@@ -23,14 +23,24 @@ const styles = {
     });
   };
 
+  renderRemoveBooksAction() {
+    if (this.props.selectedBookIds <= 0) return null;
+
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.manageButtons}>
+        <button onClick={this.removeBooks}>Remove from My Collection</button>
+      </div>
+    )
+  }
+
   render() {
     const { classes } = this.props;
 
     return (
       <div>
-        <div className={classes.manageButtons}>
-          <button onClick={this.removeBooks}>Remove from My Collection</button>
-        </div>
+        {this.renderRemoveBooksAction()}
         <div className={classes.bookResults}>
           <Bookshelf
             books={this.props.books}
