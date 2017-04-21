@@ -89,6 +89,18 @@ class BookFinder extends Component {
     });
   };
 
+  renderSaveBooksAction = () => {
+    if (this.props.selectedBookIds <= 0) return null;
+
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.manageButtons}>
+        <button onClick={this.saveBooks}>Save to My Collection</button>
+      </div>
+    )
+  }
+
   renderResultsArea = () => {
     if (!this.state.bookCount) return null;
 
@@ -99,9 +111,7 @@ class BookFinder extends Component {
         <div className={classes.bookCount}>
           {this.state.bookCount} books found. Showing 40.
         </div>
-        <div className={classes.manageButtons}>
-          <button onClick={this.saveBooks}>Save to My Collection</button>
-        </div>
+        {this.renderSaveBooksAction()}
         <div className={classes.bookResults}>
           <Bookshelf
             books={this.state.books}
