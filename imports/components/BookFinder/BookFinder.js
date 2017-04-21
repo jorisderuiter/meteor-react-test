@@ -54,6 +54,12 @@ class BookFinder extends Component {
       books: this.state.books.filter(
         book => this.props.selectedBookIds.indexOf(book.id) >= 0,
       ),
+    }, (err) => {
+      if (!err) {
+        this.props.selectedBookIds.forEach(bookId => {
+          this.props.onToggleBookSelection(bookId);
+        })
+      }
     });
   };
 
