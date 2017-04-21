@@ -18,3 +18,21 @@ export const saveBooks = new ValidatedMethod({
     }
   },
 });
+
+export const removeBooks = new ValidatedMethod({
+  name: 'removeBooks',
+
+  validate: new SimpleSchema({
+    books: Array,
+    'books.$': { type: Object, blackbox: true },
+  }).validator(),
+
+  run({ books }) {
+    try {
+      const bookIds = books.map(book => { return book.id });
+      Books.remove({ id: { $in: bookIds } });
+    } catch (e) {
+      throw new Meteor.Error('remove-error');
+    }
+  },
+});
