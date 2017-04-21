@@ -60,7 +60,7 @@ const Bookshelf = ({
           key={index}
           book={book}
           selected={selectedBookIds.indexOf(book.etag) >= 0}
-          onClick={onToggleBookSelection}
+          onClick={onToggleBookSelection.bind(this, book.id)}
         />
       ))}
     </div>
