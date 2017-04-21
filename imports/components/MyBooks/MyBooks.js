@@ -20,6 +20,12 @@ const styles = {
       books: this.props.books.filter(
         book => this.props.selectedBookIds.indexOf(book.id) >= 0,
       ),
+    }, (err) => {
+      if (!err) {
+        this.props.selectedBookIds.forEach(bookId => {
+          this.props.onToggleBookSelection(bookId);
+        })
+      }
     });
   };
 
